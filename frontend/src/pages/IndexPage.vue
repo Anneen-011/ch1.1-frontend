@@ -21,7 +21,7 @@
       </q-card-section>
     </q-card>
 
-    <q-card>
+    <q-card class="q-mb-md">
       <q-card-section>
         <div class="text-h6">Docker Concepts (สรุปสั้น ๆ)</div>
         <q-list bordered separator class="q-mt-sm">
@@ -29,6 +29,22 @@
             <q-item-section>
               <q-item-label>{{ item.title }}</q-item-label>
               <q-item-label caption>{{ item.detail }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+    </q-card>
+
+    <q-card>
+      <q-card-section>
+        <div class="text-h6">Docker Quick Reference</div>
+        <q-list bordered separator class="q-mt-sm">
+          <q-item v-for="(cmd, index) in dockerCommands" :key="index">
+            <q-item-section>
+              <q-item-label class="text-weight-bold text-primary">
+                <code>{{ cmd.command }}</code>
+              </q-item-label>
+              <q-item-label caption>{{ cmd.description }}</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
@@ -77,6 +93,29 @@ const dockerItems = [
   {
     title: 'Network',
     detail: 'ให้บริการใน Docker ติดต่อกันได้ เช่น Nginx ส่งต่อคำขอไปยัง Express',
+  },
+]
+
+const dockerCommands = [
+  {
+    command: 'docker build -t my-quasar-frontend:latest -f frontend/Dockerfile ./frontend',
+    description: 'ใช้เมื่อต้องการสร้าง Docker Image จาก Dockerfile ที่กำหนดไว้',
+  },
+  {
+    command: 'docker run -d -p 8080:80 --name my-quasar-frontend-container my-quasar-frontend:latest',
+    description: 'ใช้เมื่อต้องการรัน Container ในพื้นหลังพร้อมเชื่อมพอร์ต 8080 บนเครื่องเข้ากับพอร์ต 80 ของ Container',
+  },
+  {
+    command: 'docker ps',
+    description: 'ใช้เมื่อต้องการตรวจสอบรายการและสถานะของ Container ที่กำลังทำงานอยู่ในปัจจุบัน',
+  },
+  {
+    command: 'docker compose up -d --build',
+    description: 'ใช้เมื่อต้องการ build และเริ่มรันบริการทั้งหมดที่กำหนดในไฟล์ docker-compose.yml พร้อมกัน',
+  },
+  {
+    command: 'docker compose down',
+    description: 'ใช้เมื่อต้องการหยุดการทำงานและลบ Container รวมถึง Network ที่สร้างจาก Docker Compose ออกทั้งหมด',
   },
 ]
 </script>
